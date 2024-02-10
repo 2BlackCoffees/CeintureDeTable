@@ -24,7 +24,7 @@ def get_calculus(min: int, max: int, list_previous_values: List[Tuple[int]]):
                 abs(previous_tuple[1] - new_tuple[1]) < min_step and \
                 abs(previous_tuple[2] - new_tuple[2]) < min_step:
               recalculate = True
-              #print(f"Prev value failed {previous_tuple} : {new_tuple}")
+
             else:
                 recalculate = True
                 for existing_tuple in list_previous_values:
@@ -33,7 +33,6 @@ def get_calculus(min: int, max: int, list_previous_values: List[Tuple[int]]):
                             recalculate = False
                             break
                     if not recalculate: break
-    print("OK")
     list_previous_values.append(new_tuple)
     if len(list_previous_values) > 10:
         list_previous_values = list_previous_values[-10:-1] 
