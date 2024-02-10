@@ -1,4 +1,4 @@
-Introducing my Mental Math Exercise Generator!
+Introducing Mental Math Exercise Generator!
 
 Originally crafted to assist my son in preparing for mathematical competitions in CM2 (equivalent to the 5th year), this nifty program is perfect for anyone looking to enhance their mental calculation skills.
 
