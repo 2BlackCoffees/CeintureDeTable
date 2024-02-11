@@ -8,7 +8,9 @@ def get_values(min: int, max: int):
     if value2 == 5: value2 = randrange(3, 5) # Reduce the probability to have a number less than 6
     if value3 == 0: value3 = value2 - 1 
 
-    return (value1, value2, value3)
+    result:int = value1 * value2 + value3
+
+    return (result, value1, value2, value3)
 
 def get_calculus(min: int, max: int, list_previous_values: List[Tuple[int]]):
 
@@ -17,37 +19,24 @@ def get_calculus(min: int, max: int, list_previous_values: List[Tuple[int]]):
     while recalculate:
         recalculate = False
         new_tuple = get_values(min, max)
+        new_result: int = new_tuple[0]
         if len(list_previous_values) > 0:
-            previous_tuple = list_previous_values[-1]
-            min_step: int = 2
-            if  abs(previous_tuple[0] - new_tuple[0]) < min_step and \
-                abs(previous_tuple[1] - new_tuple[1]) < min_step and \
-                abs(previous_tuple[2] - new_tuple[2]) < min_step:
-              recalculate = True
+            recalculate = abs(list_previous_values[-1] - new_result) < 10 or \
+                          new_result in list_previous_values
 
-            else:
-                recalculate = True
-                for existing_tuple in list_previous_values:
-                    for index in range(len(new_tuple)):
-                        if abs(new_tuple[index] - existing_tuple[index]) > min_step:
-                            recalculate = False
-                            break
-                    if not recalculate: break
-    list_previous_values.append(new_tuple)
-    if len(list_previous_values) > 10:
-        list_previous_values = list_previous_values[-10:-1] 
-    (value1, value2, value3) = new_tuple
-    result:int = value1 * value2 + value3
+    (result, value1, value2, value3) = new_tuple
+    list_previous_values.append(result)
 
     return f'{result:>3} : {value1:>2} = __ reste __', \
-           f'{result:>3} : {value1:>2} = {value2:>2} reste {value3:>2}'
+           f'{result:>3} : {value1:>2} = {value2:>2} reste {value3:>2}', \
+           list_previous_values
 
 def get_line_exercice_solution():
     exercises:List[int] = []
     solutions:List[int] = []
     list_previous_values: List[Tuple] = []
     for line in range(3):
-        exercise, solution = get_calculus(6, 12, list_previous_values)
+        exercise, solution, list_previous_values = get_calculus(6, 12, list_previous_values)
         exercises.append(exercise)
         solutions.append(solution)
     return  "  |  ".join(exercises), "  |  ".join(solutions)
@@ -66,6 +55,7 @@ for line in range(number_lines):
     exercise, solution = get_line_exercice_solution()
     exercises.append(exercise)
     solutions.append(solution)
+    #print(f"Generated {line + 1} lines")
 
 print_per_step(exercises, lines_per_groups)
 print_per_step(solutions, lines_per_groups)
