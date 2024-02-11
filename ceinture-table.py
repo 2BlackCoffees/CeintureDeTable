@@ -1,5 +1,7 @@
 from random import randrange
 from typing import List, Tuple
+from datetime import datetime
+
 
 def get_values(min: int, max: int):
     value1:int = randrange(min, max + 1)
@@ -41,7 +43,8 @@ def get_line_exercice_solution():
         solutions.append(solution)
     return  "  |  ".join(exercises), "  |  ".join(solutions)
 
-def print_per_step(array_string: List[str], lines_per_groups: int):
+def print_per_step(array_string: List[str], lines_per_groups: int, date_time: datetime):
+    print(f"**** Version: {date_time} ****\n")
     for index in range(0, len(array_string), lines_per_groups):
         print("\n".join(array_string[index: index+lines_per_groups]))
         print("\n")
@@ -56,9 +59,9 @@ for line in range(number_lines):
     exercises.append(exercise)
     solutions.append(solution)
     #print(f"Generated {line + 1} lines")
-
-print_per_step(exercises, lines_per_groups)
-print_per_step(solutions, lines_per_groups)
+date_time = datetime.now()
+print_per_step(exercises, lines_per_groups, date_time)
+print_per_step(solutions, lines_per_groups, date_time)
 
 
 
